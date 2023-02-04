@@ -1,17 +1,13 @@
 pipeline {
-    agent {
-        // Define agent details here
-    }
+    agent any
     environment {
-        // The MY_KUBECONFIG environment variable will be assigned
-        // the value of a temporary file.  For example:
-        //   /home/user/.jenkins/workspace/cred_test@tmp/secretFiles/546a5cf3-9b56-4165-a0fd-19e2afe6b31f/kubeconfig.txt
-        MY_KUBECONFIG = credentials('my-kubeconfig')
+        EXAMPLE_CREDS = credentials('example-credentials-id')
     }
     stages {
-        stage('Example stage 1') {
+        stage('Example') {
             steps {
-                sh("kubectl --kubeconfig $MY_KUBECONFIG get pods")
+                /* WRONG! */
+                sh("curl -u ${EXAMPLE_CREDS_USR}:${EXAMPLE_CREDS_PSW} https://example.com/")
             }
         }
     }
