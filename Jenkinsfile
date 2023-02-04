@@ -1,5 +1,4 @@
 node {
-  
   stage('step 1') {
     echo 'script 1'    
   }
