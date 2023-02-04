@@ -1,13 +1,26 @@
 pipeline {
     agent any
-    environment {
-        EXAMPLE_CREDS = credentials('example-credentials-id')
-    }
+
     stages {
-        stage('Example') {
+        stage('test') {
             steps {
-                /* WRONG! */
-                sh("curl -u ${EXAMPLE_CREDS_USR}:${EXAMPLE_CREDS_PSW} https://example.com/")
+                sh 'echo hello'
+            }
+        }
+        stage('test1') {
+            steps {
+                sh 'echo $TEST'
+            }
+        }
+        stage('test3') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        echo 'I only execute on the master branch'
+                    } else {
+                        echo 'I execute elsewhere'
+                    }
+                }
             }
         }
     }
